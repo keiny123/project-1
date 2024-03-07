@@ -1,34 +1,65 @@
 [app]
-title = Daily Tracker
-package.name = com.yourcompany.dailytracker
-package.domain = org.yourdomain
+
+# (str) Title of your application
+title = My Application
+
+# (str) Package name
+package.name = myapp
+
+# (str) Package domain (needed for android/ios packaging)
+package.domain = org.test
+
+# (str) Source code where the main.py live
 source.dir = .
-source.include_exts = py,png,jpg,kv,atlas,json
-version = 1.0
-requirements = kivy,gspread,oauth2client,cython,aidl
+
+# (list) Source files to include (let empty to include all the files)
+source.include_exts = py,png,jpg,kv,atlas
+
+# (str) Application versioning (method 1)
+version = 0.1
+
+# (list) Application requirements
+requirements = python3,kivy==2.0.0,kivymd,pillow,gspread,oauth2client
+
+# (str) Supported orientations (landscape, portrait or all)
 orientation = portrait
-fullscreen = 0
 
-[buildozer]
-log_level = 2
-warn_on_root = 1
+# (list) Permissions
+android.permissions = INTERNET,ACCESS_NETWORK_STATE
 
-# Android specific settings
-android.permissions = INTERNET
-android.api = 27
-android.ndk = 19b
-android.arch = armeabi-v7a
-android.sdk = 20
+# (list) Android architecture to build for
+android.archs = arm64-v8a, armeabi-v7a
+
+# (bool) Indicate whether the screen should stay on
+android.wakelock = False
+
+# (int) Target Android API, should be as high as possible.
+android.api = 31
+
+# (int) Minimum API your APK / AAB will support.
 android.minapi = 21
 
-# (str) Android NDK directory (if empty, it will be automatically downloaded.)
-android.ndk_path = 
+# (int) Android SDK version to use
+android.sdk = 20
 
-# (str) Android SDK directory (if empty, it will be automatically downloaded.)
-android.sdk_path = 
+# (str) Android NDK version to use
+android.ndk = 23b
 
-# (str) python-for-android branch to use, defaults to master
-p4a.branch = master
+# (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
+android.ndk_api = 21
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 android.private_storage = True
+
+# (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies' contains an 'androidx' package, or any package from Kotlin source.
+# android.enable_androidx requires android.api >= 28
+android.enable_androidx = True
+
+
+[buildozer]
+
+# (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
+log_level = 2
+
+# (int) Display warning if buildozer is run as root (0 = False, 1 = True)
+warn_on_root = 1
