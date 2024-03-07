@@ -49,9 +49,18 @@ jobs:
         run: |
           buildozer android clean
 
-      - name: Reinstall Buildozer Dependencies
+      - name: Create buildozer.spec
         run: |
-          buildozer android debug deploy run
+          echo "[app]" > buildozer.spec
+          echo "package.name = myapp" >> buildozer.spec
+          echo "package.domain = com.example.myapp" >> buildozer.spec
+          echo "source.include_exts = py,png,jpg,kv,atlas" >> buildozer.spec
+          echo "version = 1.0" >> buildozer.spec
+          echo "requirements = kivy" >> buildozer.spec
+          echo "" >> buildozer.spec
+          echo "[buildozer]" >> buildozer.spec
+          echo "log_level = 2" >> buildozer.spec
+          echo "warn_on_root = 1" >> buildozer.spec
 
       - name: Build APK
         run: |
