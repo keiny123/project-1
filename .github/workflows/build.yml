@@ -43,7 +43,6 @@ jobs:
           sudo apt-get install aidl  # Install AIDL
           python3 -m pip install --upgrade pip wheel setuptools
           pip install buildozer
-          buildozer init
           pip install cython
      
       - name: Clean Buildozer Cache
