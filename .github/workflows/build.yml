@@ -1,4 +1,3 @@
-
 name: Build APK
 
 on:
@@ -39,6 +38,7 @@ jobs:
 
           python3 -m pip install --upgrade pip wheel setuptools
           pip install buildozer
+          pip install cython  # Install Cython
 
       - name: Build APK
         run: |
