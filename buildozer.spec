@@ -5,7 +5,7 @@ package.domain = org.yourdomain
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,json
 version = 1.0
-requirements = kivy,gspread,oauth2client
+requirements = kivy,gspread,oauth2client,cython
 orientation = portrait
 fullscreen = 0
 
