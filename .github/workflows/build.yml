@@ -36,10 +36,18 @@ jobs:
             libgles2-mesa-dev \
             zlib1g-dev
 
+          sudo apt-get install aidl  # Install AIDL
           python3 -m pip install --upgrade pip wheel setuptools
           pip install buildozer
           pip install cython
-          sudo apt-get install aidl  # Install AIDL
+     
+      - name: Clean Buildozer Cache
+        run: |
+          buildozer android clean
+
+      - name: Reinstall Buildozer Dependencies
+        run: |
+          buildozer android debug deploy run
 
       - name: Build APK
         run: |
