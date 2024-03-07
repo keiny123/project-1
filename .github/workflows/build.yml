@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      ANDROID_SDK_ROOT: /opt/android/sdk
+      ANDROID_NDK_HOME: /opt/android/ndk
+
     steps:
       - uses: actions/checkout@v2
 
