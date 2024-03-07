@@ -38,7 +38,8 @@ jobs:
 
           python3 -m pip install --upgrade pip wheel setuptools
           pip install buildozer
-          pip install cython  # Install Cython
+          pip install cython
+          sudo apt-get install aidl  # Install AIDL
 
       - name: Build APK
         run: |
