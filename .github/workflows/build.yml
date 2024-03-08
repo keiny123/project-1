@@ -65,6 +65,7 @@ jobs:
           pip install python-for-android
           pip list
           pip list | grep python-for-android
+          pip show python-for-android | grep Location
 
       - name: Clean Buildozer Cache
         run: |
