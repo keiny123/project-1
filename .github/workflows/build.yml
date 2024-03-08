@@ -66,6 +66,7 @@ jobs:
           pip list
           pip list | grep python-for-android
           pip show python-for-android | grep Location
+          pip install docwriter
 
       - name: List .buildozer directory
         run: ls -R /home/runner/work/project-1/project-1/.buildozer
