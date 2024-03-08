@@ -21,6 +21,12 @@ jobs:
         with:
           python-version: '3.8'
 
+      - name: Install Python 3.8
+        run: |
+          sudo add-apt-repository ppa:deadsnakes/ppa
+          sudo apt update
+          sudo apt install -y python3.8 python3.8-dev
+
       - name: Install dependencies
         run: |
           pip install buildozer
@@ -29,7 +35,6 @@ jobs:
           sudo apt install -y \
             build-essential \
             git \
-            python3.8 \
             python3-pip \
             python3-dev \
             ffmpeg \
