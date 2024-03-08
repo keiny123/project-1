@@ -50,7 +50,7 @@ jobs:
             libavformat-dev \
             libavcodec-dev \
             zlib1g-dev
-          pip install python-for-android
+
           sudo apt-get install libffi7 build-essential libsqlite3-dev sqlite3 bzip2 libbz2-dev zlib1g-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev
           sudo apt-get install build-essential python3-dev
           sudo apt-get install libffi-dev
@@ -60,10 +60,8 @@ jobs:
             gstreamer1.0-plugins-base \
             gstreamer1.0-plugins-good
 
-      - name: Clean Buildozer Cache
-        run: |
-          buildozer android clean
-
+          pip install python-for-android
+                    
       - name: Create buildozer.spec
         run: |
           echo "[app]" > buildozer.spec
@@ -76,6 +74,10 @@ jobs:
           echo "[buildozer]" >> buildozer.spec
           echo "log_level = 2" >> buildozer.spec
           echo "warn_on_root = 1" >> buildozer.spec
+
+      - name: Clean Buildozer Cache
+        run: |
+          buildozer android clean
 
       - name: Build APK
         run: |
