@@ -60,7 +60,11 @@ jobs:
             gstreamer1.0-plugins-base \
             gstreamer1.0-plugins-good
 
+      - name: Install pythonforandroid
+        run: |
           pip install python-for-android
+          pip list
+          pip list | grep python-for-android
 
       - name: Clean Buildozer Cache
         run: |
