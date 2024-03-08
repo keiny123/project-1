@@ -63,9 +63,6 @@ jobs:
       - name: Install pythonforandroid
         run: |
           pip install python-for-android
-          pip list
-          pip list | grep python-for-android
-          pip show python-for-android | grep Location
           pip install docwriter
 
       - name: List .buildozer directory
