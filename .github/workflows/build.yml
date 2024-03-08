@@ -67,6 +67,9 @@ jobs:
           pip list | grep python-for-android
           pip show python-for-android | grep Location
 
+      - name: List .buildozer directory
+        run: ls -R /home/runner/work/project-1/project-1/.buildozer
+
       - name: Build APK
         run: |
           buildozer -v android debug
