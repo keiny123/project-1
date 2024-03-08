@@ -67,10 +67,6 @@ jobs:
           pip list | grep python-for-android
           pip show python-for-android | grep Location
 
-      - name: Clean Buildozer Cache
-        run: |
-          buildozer android clean
-
       - name: Build APK
         run: |
           buildozer -v android debug
