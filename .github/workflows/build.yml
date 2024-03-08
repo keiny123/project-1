@@ -1,69 +1,88 @@
-[app]
+name: Build APK
 
-# (str) Title of your application
-title = Daily Tracker
+on:
+  push:
+    branches:
+      - main
 
-# (str) Package name
-package.name = myapp
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-# (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+    env:
+      ANDROID_SDK_ROOT: /opt/android/sdk
+      ANDROID_NDK_HOME: /opt/android/ndk
 
-# (str) Source code where the main.py live
-source.dir = .
+    steps:
+      - uses: actions/checkout@v2
 
-# (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-# (list) Application requirements
-requirements = python3.8,kivy==2.0.0,kivymd,pillow,gspread,oauth2client
+      - name: Install Python 3.8
+        run: |
+          sudo add-apt-repository ppa:deadsnakes/ppa
+          sudo apt update
+          sudo apt install -y python3.8 python3.8-dev
 
-# (str) Custom source folders for requirements
-# Sets custom source for any requirements with recipes
-# requirements.source.kivy = ../../kivy
+      - name: Install dependencies
+        run: |
+          pip install buildozer
+          pip install cython
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          pip3 install --upgrade Cython==0.29.33 virtualenv
+          pip install kivymd kivy
+          sudo apt-get install -y \
+            python3-pip \
+            build-essential \
+            git \
+            python3 \
+            python3-dev \
+            ffmpeg \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            libsdl2-mixer-dev \
+            libsdl2-ttf-dev \
+            libportmidi-dev \
+            libswscale-dev \
+            libavformat-dev \
+            libavcodec-dev \
+            zlib1g-dev
+          pip install python-for-android
+          sudo apt-get install -y \
+            libgstreamer1.0 \
+            gstreamer1.0-plugins-base \
+            gstreamer1.0-plugins-good
+          sudo apt-get install libffi7 build-essential libsqlite3-dev sqlite3 bzip2 libbz2-dev zlib1g-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev
+          sudo apt-get install build-essential python-dev
+          sudo apt-get install libffi-dev
+          sudo apt-get install libunwind-dev
 
-# (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
+      - name: Clean Buildozer Cache
+        run: |
+          buildozer android clean
 
-# (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+      - name: Create buildozer.spec
+        run: |
+          echo "[app]" > buildozer.spec
+          echo "package.name = myapp" >> buildozer.spec
+          echo "package.domain = com.example.myapp" >> buildozer.spec
+          echo "source.include_exts = py,png,jpg,kv,atlas" >> buildozer.spec
+          echo "version = 1.0" >> buildozer.spec
+          echo "requirements = kivy" >> buildozer.spec
+          echo "" >> buildozer.spec
+          echo "[buildozer]" >> buildozer.spec
+          echo "log_level = 2" >> buildozer.spec
+          echo "warn_on_root = 1" >> buildozer.spec
 
-# (list) Supported orientations
-# Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
-orientation = portrait
+      - name: Build APK
+        run: |
+          buildozer -v android debug
 
-# Permissions
-android.permissions = INTERNET
-
-# (list) Android architectures to build for
-android.archs = armeabi-v7a,arm64-v8a
-
-# (int) Android API to use
-android.api = 31
-
-# (int) Minimum API your APK will support
-android.minapi = 21
-
-# (int) Android SDK version to use
-android.sdk = 20
-
-# (str) Android NDK version to use
-android.ndk = 25b
-
-# (int) Android NDK API to use
-android.ndk_api = 21
-
-# (str) Application versioning (method 1)
-version = 0.1
-
-# (bool) Indicate if the application should be fullscreen or not
-fullscreen = 0
-
-# (bool) Enable AndroidX support
-android.enable_androidx = True
-
-# (bool) Skip trying to update the Android SDK
-android.skip_update = False
-
-# (bool) Automatically accept SDK license
-android.accept_sdk_license = True
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: myapp
+          path: ./bin/
